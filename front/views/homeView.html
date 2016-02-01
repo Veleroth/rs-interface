@@ -8,5 +8,6 @@
 
     </form>
 
-    <div ng-bind-html="search.res"></div>
+    <div ng-if="submitted == true"  ng-include="'/views/searchView.html'"></div>
+
 </div>

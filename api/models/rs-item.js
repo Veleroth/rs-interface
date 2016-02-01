@@ -12,9 +12,11 @@ module.exports = function(id, callback /* FUNCTION */) {
             if (!error && res.statusCode == 200) {
                 var obj = JSON.parse(body);
                 callback(obj);
+                return 1;
             }
             //error check
             else {
+                return -1;
                 console.log('[ERROR]: Bad http status in API call to runescape website - Http status: ' + res.statusCode);
                 console.log('Requested URL was: ' + url);
             }

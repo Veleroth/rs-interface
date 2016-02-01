@@ -6,7 +6,8 @@ var itemModel = require('../models/rs-item');
 //i had no prior experience with programming like this - pretty cool
 module.exports.itemSearch = function (req, res){
     var itemId = req.params.itemId;
-    itemModel(itemId, function(item){
+
+    var reult = itemModel(itemId, function(item){
         res.json(item);
     });
 

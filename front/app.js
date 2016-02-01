@@ -8,7 +8,7 @@ rsApp.config(['$routeProvider',
         $routeProvider
         .when('/home', {
             templateUrl : 'views/homeView.html',
-            controller  : 'searchCtrl'
+            controller  : 'homeCtrl'
         })
         .when('/search', {
             templateUrl : 'views/searchView.html',
