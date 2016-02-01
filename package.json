@@ -1,12 +1,14 @@
 {
-"name"    : "rs-interface",
-"version" : "0.0.1",
-"description" : "A small MEAN stack application that talks to the Old School Runescape API for Grand-Exchange Market Data",
-"dependencies"    : {
-    "express"       : "^4.13.4",
-    "gulp"          : "latest",
-    "sequelize"     : "latest",
-    "sequelize-cli" : "latest",
-    "request"       : "latest"
+  "name": "rs-interface",
+  "version": "0.0.1",
+  "description": "A small MEAN stack application that talks to the Old School Runescape API for Grand-Exchange Market Data",
+  "dependencies": {
+    "angular-chart.js": "^0.8.8",
+    "angular-chartjs": "latest",
+    "express": "^4.13.4",
+    "gulp": "latest",
+    "request": "latest",
+    "sequelize": "latest",
+    "sequelize-cli": "latest"
   }
 }

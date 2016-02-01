@@ -6,37 +6,68 @@
         <p>Examine: {{itemObject.item.description}}</p>
 
         <h4>Market Trends for {{itemObject.item.name}}</h4>
-        Current Market Price: <b>{{itemObject.item.current.price}}</b><br>
-        Generl Movement Today: <b>{{itemObject.item.today.trend}}</b>
+        <div class="alert alert-info">
+            Current Market Price: <b>{{itemObject.item.current.price}}</b><br>
+        </div>
+
+        <div ng-if="itemObject.item.today.trend == 'positive'" class="alert alert alert-success">
+            Generl Movement Today: <b>{{itemObject.item.today.trend}}</b>
+            <span class="glyphicon glyphicon-arrow-up up"></span>
+        </div>
+        <div ng-if="itemObject.item.today.trend == 'negative'" class="alert alert alert alert-danger">
+            Generl Movement Today: <b>{{itemObject.item.today.trend}}</b>
+            <span class="glyphicon glyphicon-arrow-down down"></span>
+        </div>
+        <div ng-if="itemObject.item.today.trend == 'neutral'" class="alert alert alert-success">
+            Generl Movement Today: <b>{{itemObject.item.today.trend}}</b>
+            <span class="glyphicon glyphicon-arrow-right middle"></span>
+        </div>
+
 
         <!-- styled market indicators -->
 
-        <span ng-if="itemObject.item.today.trend == 'positive'" class="glyphicon glyphicon-arrow-up    up"></span>
-        <span ng-if="itemObject.item.today.trend == 'negative'" class="glyphicon glyphicon-arrow-down  down"></span>
-        <span ng-if="itemObject.item.today.trend == 'neutral'" class="glyphicon glyphicon-arrow-right middle"></span>
 
-        <ul>
-            <li>
-                <b>1-Day  :</b>{{itemObject.item.today.price}}
-                <span ng-if="itemObject.item.today.trend == 'positive'" class="glyphicon glyphicon-arrow-up    up"></span>
-                <span ng-if="itemObject.item.today.trend == 'negative'" class="glyphicon glyphicon-arrow-down  down"></span>
-                <span ng-if="itemObject.item.today.trend == 'neutral'" class="glyphicon glyphicon-arrow-right middle"></span>
-            </li>
-            <li>
-                <b>30-Day :</b> {{itemObject.item.day30.change}}
-                <span ng-if="itemObject.item.day30.change.indexOf('+') > -1" class="glyphicon glyphicon-arrow-up    up"></span>
-                <span ng-if="itemObject.item.day30.change.indexOf('-') > -1" class="glyphicon glyphicon-arrow-down  down"></span>
-            </li>
-            <li>
-                <b>90-Day :</b> {{itemObject.item.day90.change}}
-                <span ng-if="itemObject.item.day90.change.indexOf('+') > -1" class="glyphicon glyphicon-arrow-up    up"></span>
-                <span ng-if="itemObject.item.day90.change.indexOf('-') > -1" class="glyphicon glyphicon-arrow-down  down"></span>
-            </li>
-            <li>
-                <b>180-Day:</b> {{itemObject.item.day180.change}}
-                <span ng-if="itemObject.item.day180.change.indexOf('+') > -1" class="glyphicon glyphicon-arrow-up    up"></span>
-                <span ng-if="itemObject.item.day180.change.indexOf('-') > -1" class="glyphicon glyphicon-arrow-down  down"></span>
-            </li>
-        </ul>
-        </div>
+            <table class="table table-hover table-striped">
+                <tr>
+                    <th>1 Day:</th>
+                    <td>{{itemObject.item.today.price}}</td>
+                    <td>
+                        <span ng-if="itemObject.item.today.trend == 'positive'" class="glyphicon glyphicon-arrow-up    up"></span>
+                        <span ng-if="itemObject.item.today.trend == 'negative'" class="glyphicon glyphicon-arrow-down  down"></span>
+                        <span ng-if="itemObject.item.today.trend == 'neutral'" class="glyphicon glyphicon-arrow-right middle"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>30 Day</th>
+                    <td>{{itemObject.item.day30.change}}</td>
+                    <td>
+                        <span ng-if="itemObject.item.day30.change.indexOf('+') > -1" class="glyphicon glyphicon-arrow-up    up"></span>
+                        <span ng-if="itemObject.item.day30.change.indexOf('-') > -1" class="glyphicon glyphicon-arrow-down  down"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>90 Day</th>
+                    <td>{{itemObject.item.day90.change}}</td>
+                    <td>
+                        <span ng-if="itemObject.item.day90.change.indexOf('+') > -1" class="glyphicon glyphicon-arrow-up    up"></span>
+                        <span ng-if="itemObject.item.day90.change.indexOf('-') > -1" class="glyphicon glyphicon-arrow-down  down"></span>
+                    </td>
+
+                </tr>
+                <tr>
+                    <th>180 Day</th>
+                    <td>{{itemObject.item.day180.change}}</td>
+                    <td>
+                        <span ng-if="itemObject.item.day180.change.indexOf('+') > -1" class="glyphicon glyphicon-arrow-up    up"></span>
+                        <span ng-if="itemObject.item.day180.change.indexOf('-') > -1" class="glyphicon glyphicon-arrow-down  down"></span>
+                    </td>
+                </tr>
+            </table>
+
+            <div ng-controller="LineCtrl">
+                <canvas id="line" class="chart chart-line" chart-data="data" ></canvas>
+            </div>
+
+
+    </div>
 </div>

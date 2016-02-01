@@ -32,6 +32,17 @@ rsAppControllers.controller('homeCtrl', ['$scope','$http',
                             $scope.submitted = false;
                         }
                     });
+
+
+                $http.get('/api/itemGraph/' + $scope.item.id)
+                    .then(function (response) {
+                        //$scope.graphData.jsonString = response.data;
+                        var graphObj = response.data;
+                        //arr = Object.keys(graphObj.daily).map(function (key) {return graphObj.daily[key]});
+                        //$scope.graphData = arr;
+                    });
                 $scope.submitted = true;
+
             }
-    }])
+    }]);
+
