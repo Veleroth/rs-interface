@@ -1,0 +1,39 @@
+/* main CSS styles */
+#leftNav{
+    background-color: #333333;
+    color:white;
+    min-height:50em;
+}
+#bodyArea{
+    background-color:whitesmoke;
+    min-height:50em;
+}
+.up{
+    color:green;
+}
+.down{
+    color:red;
+}
+.middle{
+    color:steelblue;
+}
+#searchResultInner{
+    padding: 5em;
+    margin: 0 auto;
+    display: table;
+}
+.searchBar{
+    width: 75%;
+    margin: 0 auto;
+    display: table;
+}
+#headerWrap{
+    margin-top:5em;
+}
+#siteTitle{
+    text-align:center;
+    font-size:10em;
+}
+#subTitle{
+    font-size:2em;
+}

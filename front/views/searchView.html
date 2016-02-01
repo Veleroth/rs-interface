@@ -1,0 +1,42 @@
+<div id="searchResult" class="col-md-12">
+    <div id="searchResultInner">
+        <img src="{{itemObject.item.icon_large}}">
+        <h1>{{itemObject.item.name}}</h1>
+        Members Only? : {{itemObject.item.members}}
+        <p>Examine: {{itemObject.item.description}}</p>
+
+        <h4>Market Trends for {{itemObject.item.name}}</h4>
+        Current Market Price: <b>{{itemObject.item.current.price}}</b><br>
+        Generl Movement Today: <b>{{itemObject.item.today.trend}}</b>
+
+        <!-- styled market indicators -->
+
+        <span ng-if="itemObject.item.today.trend == 'positive'" class="glyphicon glyphicon-arrow-up    up"></span>
+        <span ng-if="itemObject.item.today.trend == 'negative'" class="glyphicon glyphicon-arrow-down  down"></span>
+        <span ng-if="itemObject.item.today.trend == 'neutral'" class="glyphicon glyphicon-arrow-right middle"></span>
+
+        <ul>
+            <li>
+                <b>1-Day  :</b>{{itemObject.item.today.price}}
+                <span ng-if="itemObject.item.today.trend == 'positive'" class="glyphicon glyphicon-arrow-up    up"></span>
+                <span ng-if="itemObject.item.today.trend == 'negative'" class="glyphicon glyphicon-arrow-down  down"></span>
+                <span ng-if="itemObject.item.today.trend == 'neutral'" class="glyphicon glyphicon-arrow-right middle"></span>
+            </li>
+            <li>
+                <b>30-Day :</b> {{itemObject.item.day30.change}}
+                <span ng-if="itemObject.item.day30.change.indexOf('+') > -1" class="glyphicon glyphicon-arrow-up    up"></span>
+                <span ng-if="itemObject.item.day30.change.indexOf('-') > -1" class="glyphicon glyphicon-arrow-down  down"></span>
+            </li>
+            <li>
+                <b>90-Day :</b> {{itemObject.item.day90.change}}
+                <span ng-if="itemObject.item.day90.change.indexOf('+') > -1" class="glyphicon glyphicon-arrow-up    up"></span>
+                <span ng-if="itemObject.item.day90.change.indexOf('-') > -1" class="glyphicon glyphicon-arrow-down  down"></span>
+            </li>
+            <li>
+                <b>180-Day:</b> {{itemObject.item.day180.change}}
+                <span ng-if="itemObject.item.day180.change.indexOf('+') > -1" class="glyphicon glyphicon-arrow-up    up"></span>
+                <span ng-if="itemObject.item.day180.change.indexOf('-') > -1" class="glyphicon glyphicon-arrow-down  down"></span>
+            </li>
+        </ul>
+        </div>
+</div>

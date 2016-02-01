@@ -1,0 +1,12 @@
+<div id="headerWrap">
+    <h1 id="siteTitle">Rs-Interface</h1>
+</div>
+<div id="searchBar" class="col-md-12">
+    <form ng-submit="submit()">
+        <span class="searchBar">Enter an OldSchool RuneScape Item Id</span>
+        <input class="searchBar" type="text" ng-model="item.id" >
+
+    </form>
+
+    <div ng-bind-html="search.res"></div>
+</div>
