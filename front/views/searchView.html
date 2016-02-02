@@ -1,9 +1,16 @@
 <div id="searchResult" class="col-md-12">
     <div id="searchResultInner">
-        <img src="{{itemObject.item.icon_large}}">
-        <h1>{{itemObject.item.name}}</h1>
-        Members Only? : {{itemObject.item.members}}
-        <p>Examine: {{itemObject.item.description}}</p>
+
+        <div class="row">
+            <div class="col-md-1">
+                <img class="rsPic" src="{{itemObject.item.icon_large}}">
+            </div>
+            <div class="col-md-11">
+                <h1>{{itemObject.item.name}}</h1>
+                <b>Members:</b>  {{itemObject.item.members}}
+                <p><b>Examine:</b> {{itemObject.item.description}}</p>
+            </div>
+        </div>
 
         <h4>Market Trends for {{itemObject.item.name}}</h4>
         <div class="alert alert-info">
@@ -64,10 +71,19 @@
                 </tr>
             </table>
 
-            <div ng-controller="MainCtrl">
-                <canvas id="line" class="chart chart-line" chart-data="dailyGraphArData" chart-labels="dailyGraphArLabels"></canvas>
+            <div ng-controller="MainCtrl" class="chartWrap">
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <h3>30 Day History</h3>
+                    <canvas id="day30" class="chart chart-line" chart-data="day30Data" chart-labels="day30Labels"></canvas>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <h3>90 Day History</h3>
+                    <canvas id="day90" class="chart chart-line" chart-data="day90Data" chart-labels="day90Labels"></canvas>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <h3>180 Day History</h3>
+                    <canvas id="day180" class="chart chart-line" chart-data="day180Data" chart-labels="day180Labels"></canvas>
+                </div>
             </div>
-
-
     </div>
 </div>

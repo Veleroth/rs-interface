@@ -18,7 +18,7 @@
     color:steelblue;
 }
 #searchResultInner{
-    padding: 5em;
+    padding: 1em;
 
 }
 .searchBar{
@@ -35,4 +35,14 @@
 }
 #subTitle{
     font-size:2em;
+}
+.rsPic{
+
+}
+.chartWrap{
+    height:35em;
+}
+canvas{
+    width:100%;
+    height:100%;
 }

@@ -3,29 +3,30 @@ var rsApp = angular.module('rsApp', [
 ]);
 
 
+
+
 rsApp// Optional configuration
     .config(['ChartJsProvider', function (ChartJsProvider) {
         // Configure all charts
         ChartJsProvider.setOptions({
-            colours: ['#FF5252', '#FF8A80'],
-            responsive: true
+            colours: ['#31708f', '#bce8f1'],
+            responsive: true,
+            animation: true,
+            animationSteps : 60,
+            width: 500
+
         });
         // Configure all line charts
         ChartJsProvider.setOptions('Line', {
-            datasetFill: false
+            datasetFill: true,
+            animationEasing: "easeOutQuart",
+            pointDot: false,
+            pointDotRadius: 1,
+            pointHitDetectionRadius : 1
         });
-    }])
-    .controller("LineCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
-
-        $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-        $scope.graphData = [
-            [65, 59, 80, 81, 56, 55, 40],
-        ];
-
     }])
     .controller('MainCtrl', ['$scope','$http','$filter', function( $scope, $http, $filter){
             $scope.submitted = false;
-
             $scope.submit = function() {
                 console.log($scope.item.id);
                 $http.get('/api/itemSearch/' + $scope.item.id)
@@ -41,43 +42,89 @@ rsApp// Optional configuration
                         }
                     });
 
-
                 $http.get('/api/itemGraph/' + $scope.item.id)
                     .then(function (response) {
 
+                        /*
+                         * @param json    : the json representing graphing data
+                         * @param numDays : the number of days to display
+                         * @param dataAr  : REFERENCED - dataArray to fill
+                         * @param labelAR : REFERENCED - labelArray to fill
+                         */
+                        var plotGraph = function(json, numDays, callback){
+                            //declare two arrays
+                            var gData = [];
+
+                            //build graphing data
+                            var dataAr = [];
+                            var i = 0;
+                            for (var key in json) {
+                                if(i > (180 - numDays) ) {
+                                    if (json.hasOwnProperty(key)) {
+                                        dataAr.push(json[key]);
+                                    }
+                                }
+                                i++;
+                            }
+
+                            //build labels for the data
+                            var i = 0;
+                            var labelAr = []
+                            for ( property in json){
+                                if( i > (180 - numDays) ) {
+                                    if(numDays == 180) {
+                                        if (i % 10 == 0) {
+                                            labelAr.push($filter('date')(property, "MM-dd"));
+                                        } else {
+                                            labelAr.push('');
+                                        }
+                                    }else if(numDays >= 90){
+                                        if (i % 5 == 0) {
+                                            labelAr.push($filter('date')(property, "MM-dd"));
+                                        } else {
+                                            labelAr.push('');
+                                        }
+                                    }else{
+                                        labelAr.push($filter('date')(property, "MM-dd"));
+                                    }
+                                }
+                                i++;
+                            }
+
+                            gData[0] = labelAr;
+                            gData[1] = dataAr;
+
+                            callback(gData);
+                        }
+
                         //assign the returned json to arrays
-                        var dailyJson   = response.data.average;
+
                         var averageJson = response.data.average;
 
-                        //declare two arrays
-                        var gData = [];
-                        var gLabels = [];
-                        $scope.dailyGraphArLabels = [];
-                        $scope.dailyGraphArData = [];
+                        //*****************************************************
+                        //All Daily Pricing Data
+                        var dailyJson   = response.data.daily;
+                        $scope.day30Data    = [];
+                        $scope.day30Labels  = [];
+                        $scope.day90Data    = [];
+                        $scope.day90Labels  = [];
+                        $scope.day180Data   = [];
+                        $scope.day180Labels = [];
 
-                        i = 0;
-                        for (var key in dailyJson) {
-                            if(i > 150) {
-                                if (dailyJson.hasOwnProperty(key)) {
-                                    gData.push(dailyJson[key]);
-                                }
-                            }
-                            i++;
-                        }
-                        $scope.dailyGraphArData.push(gData);
-
-                        i = 0;
-                        for ( property in dailyJson){
-                            if( i > 150) {
-                                $scope.dailyGraphArLabels.push($filter('date')(property, "MM-dd"));
-                            }
-                            i++;
-                        }
+                        plotGraph(dailyJson,30, function(ar){
+                            $scope.day30Data.push(ar[1]);
+                            $scope.day30Labels = ar[0];
+                        });
+                        plotGraph(dailyJson,90, function(ar){
+                            $scope.day90Data.push(ar[1]);
+                            $scope.day90Labels = ar[0];
+                        });
+                        plotGraph(dailyJson,180, function(ar){
+                            $scope.day180Data.push(ar[1]);
+                            $scope.day180Labels = ar[0];
+                        });
 
 
-                        //test output the data
-                        console.log('dailyGraphArData: ' + $scope.dailyGraphArData);
-                        console.log('dailyGraphLabels: ' + $scope.dailyGraphArLabels);
                     });
                 $scope.submitted = true;
             }

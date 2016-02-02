@@ -7,9 +7,9 @@ var itemModel = require('../models/rs-item');
 module.exports.itemSearch = function (req, res){
     var itemId = req.params.itemId;
 
-     itemModel(itemId, function(item){
+      (itemModel(itemId, function(item){
         res.json(item);
-    });
+    }))
 
     console.log('[REQUEST] - Searched for item: ' + itemId);
 }
