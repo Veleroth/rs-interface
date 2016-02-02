@@ -1,30 +1,14 @@
 var rsApp = angular.module('rsApp', [
-    'ngRoute',
-    'rsAppControllers',
     'chart.js'
 ]);
 
-
-rsApp.config(['$routeProvider',
-    function($routeProvider){
-        $routeProvider
-        .when('/home', {
-            templateUrl : 'views/homeView.html',
-            controller  : 'homeCtrl'
-        })
-        .when('/search', {
-            templateUrl : 'views/searchView.html',
-            controller  : 'searchCtrl'
-        })
-    }
-]);
 
 rsApp// Optional configuration
     .config(['ChartJsProvider', function (ChartJsProvider) {
         // Configure all charts
         ChartJsProvider.setOptions({
             colours: ['#FF5252', '#FF8A80'],
-            responsive: false
+            responsive: true
         });
         // Configure all line charts
         ChartJsProvider.setOptions('Line', {
@@ -34,20 +18,67 @@ rsApp// Optional configuration
     .controller("LineCtrl", ['$scope', '$timeout', function ($scope, $timeout) {
 
         $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-        $scope.series = ['Series A', 'Series B'];
-        $scope.data = [
+        $scope.graphData = [
             [65, 59, 80, 81, 56, 55, 40],
-            [28, 48, 40, 19, 86, 27, 90]
         ];
-        $scope.onClick = function (points, evt) {
-            console.log(points, evt);
-        };
 
-        // Simulate async data update
-        $timeout(function () {
-            $scope.data = [
-                [28, 48, 40, 19, 86, 27, 90],
-                [65, 59, 80, 81, 56, 55, 40]
-            ];
-        }, 3000);
-    }]);
+    }])
+    .controller('MainCtrl', ['$scope','$http','$filter', function( $scope, $http, $filter){
+            $scope.submitted = false;
+
+            $scope.submit = function() {
+                console.log($scope.item.id);
+                $http.get('/api/itemSearch/' + $scope.item.id)
+                    .then(function (response) {
+                        if(response != null) {
+                            $scope.item.jsonString = response.data;
+                            $scope.itemObject = response.data;
+                            console.log('resonse was not null');
+                        }
+                        else{
+                            console.log('response was null');
+                            $scope.submitted = false;
+                        }
+                    });
+
+
+                $http.get('/api/itemGraph/' + $scope.item.id)
+                    .then(function (response) {
+
+                        //assign the returned json to arrays
+                        var dailyJson   = response.data.average;
+                        var averageJson = response.data.average;
+
+                        //declare two arrays
+                        var gData = [];
+                        var gLabels = [];
+                        $scope.dailyGraphArLabels = [];
+                        $scope.dailyGraphArData = [];
+
+                        i = 0;
+                        for (var key in dailyJson) {
+                            if(i > 150) {
+                                if (dailyJson.hasOwnProperty(key)) {
+                                    gData.push(dailyJson[key]);
+                                }
+                            }
+                            i++;
+                        }
+                        $scope.dailyGraphArData.push(gData);
+
+                        i = 0;
+                        for ( property in dailyJson){
+                            if( i > 150) {
+                                $scope.dailyGraphArLabels.push($filter('date')(property, "MM-dd"));
+                            }
+                            i++;
+                        }
+
+
+                        //test output the data
+                        console.log('dailyGraphArData: ' + $scope.dailyGraphArData);
+                        console.log('dailyGraphLabels: ' + $scope.dailyGraphArLabels);
+                    });
+                $scope.submitted = true;
+            }
+        }]);

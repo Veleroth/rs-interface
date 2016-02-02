@@ -9,6 +9,7 @@
     "gulp": "latest",
     "request": "latest",
     "sequelize": "latest",
-    "sequelize-cli": "latest"
+    "sequelize-cli": "latest",
+    "angular-chart.js": "latest"
   }
 }
