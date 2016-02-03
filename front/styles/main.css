@@ -46,3 +46,18 @@ canvas{
     width:100%;
     height:100%;
 }
+.preLoader{
+    margin: 0 auto;
+    display: table;
+    padding: 15em;
+}
+#notFound{
+    width:65%;
+    margin:0 auto;
+}
+.notFoundImg{
+    height:30em;
+    display:table;
+    margin: 0 auto;
+    padding:2em;
+}

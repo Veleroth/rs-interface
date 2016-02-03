@@ -10,6 +10,5 @@ module.exports.itemSearch = function (req, res){
       (itemModel(itemId, function(item){
         res.json(item);
     }))
-
     console.log('[REQUEST] - Searched for item: ' + itemId);
 }

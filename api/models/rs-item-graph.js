@@ -1,7 +1,8 @@
 
 
 module.exports = function(id, callback /* FUNCTION */) {
-    var url = 'http://services.runescape.com/m=itemdb_rs/api/graph/' + id + '.json';
+
+    var url = 'http://services.runescape.com/m=itemdb_oldschool/api/graph/' + id + '.json';
     var request = require('request');
 
     request(url, function (error, res, body) {

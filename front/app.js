@@ -2,9 +2,6 @@ var rsApp = angular.module('rsApp', [
     'chart.js'
 ]);
 
-
-
-
 rsApp// Optional configuration
     .config(['ChartJsProvider', function (ChartJsProvider) {
         // Configure all charts
@@ -31,16 +28,29 @@ rsApp// Optional configuration
                 console.log($scope.item.id);
                 $http.get('/api/itemSearch/' + $scope.item.id)
                     .then(function (response) {
-                        if(response != null) {
+
+                        if( response.data != 404 ) {
                             $scope.item.jsonString = response.data;
                             $scope.itemObject = response.data;
                             console.log('resonse was not null');
+                            $('#searchResultInner').show();
+                            $('#loading').hide();
+                            $('#notFound').hide();
                         }
                         else{
                             console.log('response was null');
-                            $scope.submitted = false;
+                            $scope.submitted = true;
+                            $('#searchResultInner').hide();
+                            $('#loading').hide();
+                            $('#notFound').show();
+
                         }
+                    }, function (response){
+                        $('#loading').hide();
+                        console.log('response was null');
                     });
+                $('#searchResultInner').hide();
+                $('#loading').show();
 
                 $http.get('/api/itemGraph/' + $scope.item.id)
                     .then(function (response) {
@@ -97,13 +107,11 @@ rsApp// Optional configuration
                             callback(gData);
                         }
 
-                        //assign the returned json to arrays
-
-                        var averageJson = response.data.average;
 
                         //*****************************************************
                         //All Daily Pricing Data
                         var dailyJson   = response.data.daily;
+
                         $scope.day30Data    = [];
                         $scope.day30Labels  = [];
                         $scope.day90Data    = [];
@@ -122,6 +130,30 @@ rsApp// Optional configuration
                         plotGraph(dailyJson,180, function(ar){
                             $scope.day180Data.push(ar[1]);
                             $scope.day180Labels = ar[0];
+                        });
+
+
+                        //*****************************************************
+                        //All Average Pricing Data
+                        var averageJson = response.data.average;
+                        $scope.day30DataAvg    = [];
+                        $scope.day30LabelsAvg  = [];
+                        $scope.day90DataAvg    = [];
+                        $scope.day90LabelsAvg  = [];
+                        $scope.day180DataAvg   = [];
+                        $scope.day180LabelsAvg = [];
+
+                        plotGraph(averageJson,30, function(ar){
+                            $scope.day30DataAvg.push(ar[1]);
+                            $scope.day30LabelsAvg = ar[0];
+                        });
+                        plotGraph(averageJson,90, function(ar){
+                            $scope.day90DataAvg.push(ar[1]);
+                            $scope.day90LabelsAvg = ar[0];
+                        });
+                        plotGraph(averageJson,180, function(ar){
+                            $scope.day180DataAvg.push(ar[1]);
+                            $scope.day180LabelsAvg = ar[0];
                         });
 
 

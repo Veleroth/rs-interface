@@ -16,7 +16,7 @@ module.exports = function(id, callback /* FUNCTION */) {
             }
             //error check
             else {
-                return -1;
+                callback(404);
                 console.log('[ERROR]: Bad http status in API call to runescape website - Http status: ' + res.statusCode);
                 console.log('Requested URL was: ' + url);
             }

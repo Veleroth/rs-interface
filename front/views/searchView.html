@@ -1,4 +1,11 @@
 <div id="searchResult" class="col-md-12">
+    <div id="loading"><img class="preLoader" src="images/loading.gif"></div>
+    <div id="notFound">
+        <div class="row">
+            <img class="notFoundImg" src="images/Vannaka.png">
+            <div class="alert alert alert alert-danger"><h2>Item Was Not Found.</h2></div>
+        </div>
+    </div>
     <div id="searchResultInner">
 
         <div class="row">
@@ -83,6 +90,18 @@
                 <div class="col-sm-12 col-md-12 col-lg-4">
                     <h3>180 Day History</h3>
                     <canvas id="day180" class="chart chart-line" chart-data="day180Data" chart-labels="day180Labels"></canvas>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <h3>30 Day Average</h3>
+                    <canvas id="day30Avg" class="chart chart-line" chart-data="day30DataAvg" chart-labels="day30LabelsAvg"></canvas>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <h3>90 Day Average</h3>
+                    <canvas id="day90Avg" class="chart chart-line" chart-data="day90DataAvg" chart-labels="day90LabelsAvg"></canvas>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <h3>180 Day Average</h3>
+                    <canvas id="day180Avg" class="chart chart-line" chart-data="day180DataAvg" chart-labels="day180LabelsAvg"></canvas>
                 </div>
             </div>
     </div>
